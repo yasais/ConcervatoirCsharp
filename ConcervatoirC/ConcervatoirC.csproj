@@ -102,11 +102,17 @@
     <Compile Include="Vue\AjoutProf.Designer.cs">
       <DependentUpon>AjoutProf.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vue\Form1.cs">
+    <Compile Include="Vue\SelectListeEleve.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vue\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Vue\SelectListeEleve.Designer.cs">
+      <DependentUpon>SelectListeEleve.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vue\ListeProf.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vue\ListeProf.Designer.cs">
+      <DependentUpon>ListeProf.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -155,8 +161,8 @@
     <EmbeddedResource Include="Vue\AjoutProf.resx">
       <DependentUpon>AjoutProf.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Vue\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Vue\ListeProf.resx">
+      <DependentUpon>ListeProf.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Vue\Form2.resx">
       <DependentUpon>Form2.cs</DependentUpon>
@@ -172,6 +178,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Vue\Seance.resx">
       <DependentUpon>Seance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vue\SelectListeEleve.resx">
+      <DependentUpon>SelectListeEleve.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

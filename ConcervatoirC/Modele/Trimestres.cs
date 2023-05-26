@@ -12,6 +12,7 @@ namespace ConcervatoirC.Modele
         private string datefin;
         private int idEleve;
         private int paye;
+        private string datePaiement;
 
         public Trimestres(string libelle, string datefin)
         {
@@ -19,20 +20,29 @@ namespace ConcervatoirC.Modele
             this.datefin = datefin;
         }
 
-        public Trimestres(int idEleve,  string libelle, string datefin,  int paye)
+        public Trimestres(int idEleve,  string libelle, string datePaiement,  int paye)
         {
             this.libelle = libelle;
-            this.datefin = datefin;
+            this.datePaiement = datePaiement;
             this.idEleve = idEleve;
             this.paye = paye;
         }
 
         public string Libelle { get => libelle; set => libelle = value; }
         public string Datefin { get => datefin; set => datefin = value; }
+        public int Paye { get => paye; set => paye = value; }
 
         public override string ToString()
         {
-            return  libelle + "  Date de fin de trimestre : " + datefin;
+            if(paye == 1)
+            {
+                return libelle + ", payé le : " + datePaiement;   
+            }
+            else
+            {
+                return libelle + " date de paiement maximum : " + datefin;
+
+            }
         }
 
     }

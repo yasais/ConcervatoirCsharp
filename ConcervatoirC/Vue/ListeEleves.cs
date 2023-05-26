@@ -16,26 +16,26 @@ namespace ConcervatoirC.Vue
     {
         Seances eleve;
         List<Eleve> lesEleves = new List<Eleve>();
-        Seances e;
+        Seances Se;
         private Seance idSeance;
 
         public ListeEleves(Seances eS)
         {
             InitializeComponent();
-            e = eS;
-
-            if (eS == null)
-            {
-                MessageBox.Show("Aucun eleves n'est inscrit à cette séance");
-                return;
-            }
-
-            int numSeance = eS.Id;
+            Se = eS;
+            int numSeance = eS.Numsceance;
 
             lesEleves = Pers.chargementEleve(numSeance);
 
             affiche();
 
+            if (lesEleves.Count == 0)
+            {
+                MessageBox.Show("Aucun eleves n'est inscrit à cette séance");
+            }
+            
+
+      
         }
 
         public ListeEleves(Seance idSeance)
@@ -64,5 +64,14 @@ namespace ConcervatoirC.Vue
         {
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            SelectListeEleve listeEleves = new SelectListeEleve(Se);
+            listeEleves.ShowDialog();
+        }
+
+       
     }
 }

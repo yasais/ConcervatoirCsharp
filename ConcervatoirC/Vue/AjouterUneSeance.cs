@@ -30,6 +30,27 @@ namespace ConcervatoirC.Vue
 
         }
 
+
+        /*Gestion de la fermeture du form*/
+        int SC_CLOSE = 0xF060;
+        int WM_SYSCOMMAND = 0x0112;
+        bool xClick = false;
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == WM_SYSCOMMAND && m.WParam.ToInt32() == SC_CLOSE)
+            {
+                xClick = true;
+                this.Hide();
+                
+                Seance seance = new Seance(pr);
+                seance.ShowDialog();
+
+            }
+            base.WndProc(ref m);
+        }
+
+        
+
         private void AjouterUneSeance_Load(object sender, EventArgs e)
         {
 
@@ -57,6 +78,11 @@ namespace ConcervatoirC.Vue
             Pers.ajoutSeance(showNumSeance, idProf,  tranche, jour, niveau, capacite);
 
             MessageBox.Show("Seance ajoutée");
+
+            this.Hide();
+
+            Seance seance = new Seance(pr);
+            seance.ShowDialog();
 
 
         }

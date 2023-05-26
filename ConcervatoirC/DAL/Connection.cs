@@ -93,7 +93,9 @@ namespace Connecte
         {
             try
             {
-                mysqlCn.Open();
+               // if (mysqlCn.State == System.Data.ConnectionState.Closed)
+
+                    mysqlCn.Open();
             }
             catch (Exception emp)
             {

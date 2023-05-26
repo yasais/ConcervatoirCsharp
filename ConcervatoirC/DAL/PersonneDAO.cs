@@ -10,6 +10,7 @@ using ConcervatoirC.Vue;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using MySqlX.XDevAPI.Common;
+using static Mysqlx.Notice.Warning.Types;
 
 namespace ConcervatoirC.DAL
 {
@@ -226,6 +227,8 @@ namespace ConcervatoirC.DAL
         {
             List<Eleve> lesEleves = new List<Eleve>();
 
+            Console.WriteLine(numSeance);
+
             try
             {
                 maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
@@ -265,7 +268,49 @@ namespace ConcervatoirC.DAL
             }
         }
 
+        public static List<Eleve> getAllEleves()
+        {
+            List<Eleve> lesEleves = new List<Eleve>();
 
+
+            try
+            {
+                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
+                maConnexionSql.openConnection();
+
+                Ocom = maConnexionSql.reqExec("SELECT eleve.IDELEVE, nom, prenom, tel, mail, adresse, bourse FROM eleve JOIN personne ON eleve.IDELEVE = personne.ID"); //SELECT nom, prenom, tel, mail, adresse, instrument, salaire FROM prof JOIN personne ON prof.IDPROF = personne.ID
+                MySqlDataReader reader = Ocom.ExecuteReader();
+
+                Eleve e;
+
+                while (reader.Read())
+                {
+
+                    int ideleve = (int)reader.GetValue(0);
+                    string nom = (string)reader.GetValue(1);
+                    string prenom = (string)reader.GetValue(2);
+                    int tel = (int)reader.GetValue(3);
+                    string mail = (string)reader.GetValue(4);
+                    string adresse = (string)reader.GetValue(5);
+                    int bourse = (int)reader.GetValue(6);
+
+                    e = new Eleve(ideleve, nom, prenom, tel, mail, adresse, bourse);
+                    lesEleves.Add(e);
+                }
+                reader.Close();
+
+                maConnexionSql.closeConnection();
+
+                return (lesEleves);
+            }
+
+            catch (Exception emp)
+            {
+
+                throw (emp);
+
+            }
+        }
         public static List<Instrument> getAllInstrument()
         {
             List<Instrument> lesInstruments = new List<Instrument>();
@@ -706,16 +751,16 @@ namespace ConcervatoirC.DAL
                 ConnexionSql maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
                 maConnexionSql.openConnection();
 
-                Ocom = maConnexionSql.reqExec("SELECT COUNT(*) FROM payer WHERE IDELEVE = @ideleve AND LIBELLE = @libelle AND PAYE = 1");
+                Ocom = maConnexionSql.reqExec("SELECT COUNT(*) as nbre FROM payer WHERE IDELEVE = @ideleve AND LIBELLE = @libelle AND PAYE = 1");
                 Ocom.Parameters.AddWithValue("@ideleve", idEleve);
                 Ocom.Parameters.AddWithValue("@libelle", libelleTrimestre);
                 MySqlDataReader reader = Ocom.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    
 
-                    int nbResultats = (int)Ocom.ExecuteScalar();
+
+                    Int64 nbResultats = (Int64)reader.GetValue(0);
 
                     if (nbResultats > 0)
                     {
@@ -727,6 +772,10 @@ namespace ConcervatoirC.DAL
                 reader.Close();
 
                 maConnexionSql.closeConnection();
+
+                
+
+                //yyyyyyyyyyyyyyyyy
 
             }
             catch (Exception e)
@@ -811,8 +860,149 @@ namespace ConcervatoirC.DAL
 
 
         }
-    }
+
+        //insertion des trimestres payé
+        public static void InsertionTrimestrePaye(int idEleve, string libelle)
+        {
+
+            try
+            {
+
+                ConnexionSql maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
+
+                string queryString = "INSERT INTO payer (IDELEVE, LIBELLE, DATEPAEMENT, PAYE) VALUES (@idEleve, @libelle, NOW(), 1)";
+
+                Ocom = maConnexionSql.reqExec(queryString);
+                Ocom.Parameters.AddWithValue("@idEleve", idEleve);
+                Ocom.Parameters.AddWithValue("@libelle", libelle);
+
+                maConnexionSql.openConnection();
+                Ocom.ExecuteNonQuery();
+                maConnexionSql.closeConnection();
+
+            }
+            catch (Exception emp)
+            {
+
+                throw (emp);
+
+            }
+
+        }
+
+        public static List<Eleve> EleveExclu(string jour, string heureDebut, string heureFin)
+        {
             
+            List<Eleve> elevesExclu = new List<Eleve>();
+
+            Console.WriteLine("test 4");
+            try
+            {
+                maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
+                maConnexionSql.openConnection();
+                Ocom = maConnexionSql.reqExec("SELECT P.ID, P.NOM, P.PRENOM, P.TEL, P.MAIL, P.ADRESSE " +
+                                                "FROM inscription I " +
+                                                "INNER JOIN seance S ON I.NUMSEANCE = S.NUMSEANCE " +
+                                                "INNER JOIN personne P ON I.IDELEVE = P.ID " +
+                                                "WHERE S.jour = @jour " +
+                                                "AND( " +
+                                                        "((SELECT SUBSTRING_INDEX(S.TRANCHE, 'h', 1))<=(SELECT CAST(@heureDebut AS INT)) " +
+
+                                                            "AND( SELECT SUBSTRING_INDEX(SUBSTRING_INDEX(S.TRANCHE, 'h', 2), '-', -1)) <= (SELECT CAST( @heureFin AS INT)) " +
+                                                            "AND (SELECT SUBSTRING_INDEX(SUBSTRING_INDEX(S.TRANCHE, 'h', 2), '-', -1)) > (SELECT CAST( @heureDebut AS INT))) " +
+                                                        "OR " +
+                                                        "((SELECT SUBSTRING_INDEX(S.TRANCHE, 'h', 1))>=(SELECT CAST(@heureDebut AS INT)) " +
+                                                           "AND( SELECT SUBSTRING_INDEX(SUBSTRING_INDEX(S.TRANCHE, 'h', 2), '-', -1)) >= (SELECT CAST( @heureFin AS INT)) " +
+                                                          "AND (SELECT SUBSTRING_INDEX(S.TRANCHE, 'h', 1)) < (SELECT CAST( @heureFin AS INT)))  " +
+                                                         "OR " +
+
+                                                         "((SELECT SUBSTRING_INDEX(S.TRANCHE, 'h', 1))<=(SELECT CAST(@heureDebut AS INT)) " +
+                                                           "AND( SELECT SUBSTRING_INDEX(SUBSTRING_INDEX(S.TRANCHE, 'h', 2), '-', -1)) >= (SELECT CAST( @heureFin AS INT))) " +
+
+
+                                                         "OR " +
+
+                                                         "((SELECT SUBSTRING_INDEX(S.TRANCHE, 'h', 1))>=(SELECT CAST(@heureDebut AS INT)) " +
+                                                           "AND( SELECT SUBSTRING_INDEX(SUBSTRING_INDEX(S.TRANCHE, 'h', 2), '-', -1))<= (SELECT CAST( @heureFin AS INT))) " +
+                                                      ")");
+
+                Ocom.Parameters.AddWithValue("@jour", jour);
+                Ocom.Parameters.AddWithValue("@heureDebut", heureDebut);
+                Ocom.Parameters.AddWithValue("@heureFin", heureFin);
+
+                Ocom.ExecuteNonQuery();
+                MySqlDataReader reader = Ocom.ExecuteReader();
+                Eleve e;
+                while (reader.Read())
+                {
+                    int ideleve = (int)reader.GetValue(0);
+                    string nom = (string)reader.GetValue(1);
+                    string prenom = (string)reader.GetValue(2);
+                    int tel = (int)reader.GetValue(3);
+                    string mail = (string)reader.GetValue(4);
+                    string adresse = (string)reader.GetValue(5);
+
+
+                    //Instanciation d'un personne
+                    e = new Eleve(ideleve, nom, prenom, tel, mail, adresse);
+
+                    elevesExclu.Add(e);
+
+                }
+
+                reader.Close();
+
+                maConnexionSql.closeConnection();
+
+                return (elevesExclu);
+            }
+
+
+
+            catch (Exception emp)
+            {
+
+                throw (emp);
+
+            }
+
+        }
+
+        //ajouterCetEleve
+
+        public static void AjouterCetEleve(int idProf, int idEleve, int numseance)
+        {
+
+            try
+            {
+
+                ConnexionSql maConnexionSql = ConnexionSql.getInstance(provider, dataBase, uid, mdp);
+
+                string queryString = "INSERT INTO inscription (IDPROF, IDELEVE, NUMSEANCE, DATEINSCRIPTION) VALUES (@idProf, @idEleve, @numseance, NOW())";
+                Ocom = maConnexionSql.reqExec(queryString);
+                Ocom.Parameters.AddWithValue("@idProf", idProf);
+                Ocom.Parameters.AddWithValue("@idEleve", idEleve);
+                Ocom.Parameters.AddWithValue("@numseance", numseance);
+                
+
+                maConnexionSql.openConnection();
+                Ocom.ExecuteNonQuery();
+                maConnexionSql.closeConnection();
+
+            }
+            catch (Exception emp)
+            {
+
+                throw (emp);
+
+            }
+
+
+        }
+
+
+
+    }
 
 
 
@@ -825,5 +1015,6 @@ namespace ConcervatoirC.DAL
 
 
 
-    
+
+
 }

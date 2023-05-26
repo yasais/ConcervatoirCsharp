@@ -1,6 +1,6 @@
 ﻿namespace ConcervatoirC
 {
-    partial class Form1
+    partial class ListeProf
     {
         /// <summary>
         /// Variable nécessaire au concepteur.
@@ -92,7 +92,7 @@
             this.label1.Font = new System.Drawing.Font("Myanmar Text", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(484, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(232, 60);
+            this.label1.Size = new System.Drawing.Size(224, 58);
             this.label1.TabIndex = 5;
             this.label1.Text = "Conservatoire";
             // 

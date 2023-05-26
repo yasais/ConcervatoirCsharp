@@ -34,7 +34,22 @@ namespace ConcervatoirC.Vue
 
         }
 
-        
+
+        int SC_CLOSE = 0xF060;
+        int WM_SYSCOMMAND = 0x0112;
+        bool xClick = false;
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == WM_SYSCOMMAND && m.WParam.ToInt32() == SC_CLOSE)
+            {
+                xClick = true;
+                this.Hide();
+                Seance seance = new Seance(pr);
+                seance.ShowDialog();
+            }
+            base.WndProc(ref m);
+        }
+
 
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
@@ -58,7 +73,9 @@ namespace ConcervatoirC.Vue
                     controleur.modifieDateSeance(jour, heure, this.seance.Numsceance);
 
                     MessageBox.Show("Modifications réusites");
-                    this.Close();
+                    this.Hide();
+                    Seance seance = new Seance(pr);
+                    seance.ShowDialog();
                 }
                 else
                 {

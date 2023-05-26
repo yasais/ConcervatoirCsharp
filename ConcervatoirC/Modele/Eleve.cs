@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mysqlx.Crud;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,6 +27,17 @@ namespace ConcervatoirC.Modele
             this.adresse = adresse;
             this.bourse = bourse;
         }
+        
+        //surcharge du constructeur
+        public Eleve(int ideleve, string nom, string prenom, int tel, string mail, string adresse)
+        {
+            this.id = ideleve;
+            this.nom = nom;
+            this.prenom = prenom;
+            this.tel = tel;
+            this.mail = mail;
+            this.adresse = adresse;
+        }
 
         public int Id { get => id; set => id = value; }
         public string Nom { get => nom; set => nom = value; }
@@ -37,7 +49,7 @@ namespace ConcervatoirC.Modele
 
         public override string ToString()
         {
-            return " Nom: " + nom + ",  Prenom: " + prenom + ",  Telephone: " + tel + ",  Mail: " + mail + ",  Adresse: " + adresse + ",  Bourse: " + bourse;
+            return id + " -- Nom: " + nom + ",  Prenom: " + prenom + ",  Telephone: " + tel + ",  Mail: " + mail + ",  Adresse: " + adresse + ",  Bourse: " + bourse;
         }
     }
 }

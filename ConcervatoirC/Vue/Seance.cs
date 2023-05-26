@@ -28,6 +28,19 @@ namespace ConcervatoirC.Vue
 
             lesSeances = Pers.chargementSeance(idProf);
 
+            if(lesSeances.Count == 0)
+            {
+                button1.Hide();
+                button2.Hide();
+                MessageBox.Show("Pas de séance pour ce professeur");
+                
+            }
+            else
+            {
+                button1.Show();
+                button2.Show();
+            }
+
             affiche();
 
         }
@@ -60,12 +73,18 @@ namespace ConcervatoirC.Vue
         private void button2_Click(object sender, EventArgs e)
         {
             Seances seance = (Seances)listBoxSeance.SelectedItem;
+
+            this.Hide();
+
             ModifierSeance modifierSeance = new ModifierSeance(seance);
             modifierSeance.ShowDialog();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
+
+            this.Hide();
+            
             AjouterUneSeance ajouterUneSeance = new AjouterUneSeance(PrSc);
             ajouterUneSeance.ShowDialog();
         }

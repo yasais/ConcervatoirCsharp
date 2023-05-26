@@ -42,7 +42,11 @@ namespace ConcervatoirC.Controleur
             List<Eleve> lesEleves = PersonneDAO.getAllEleve(numSeance);
             return (lesEleves);
         }
-
+        public static List<Eleve> getAllEleves()
+        {
+            List<Eleve> lesEleves = PersonneDAO.getAllEleves();
+            return (lesEleves);
+        }
         public static List<Instrument> chargementInstrument()
         {
             List<Instrument> lesInstruments = PersonneDAO.getAllInstrument();
@@ -140,16 +144,57 @@ namespace ConcervatoirC.Controleur
                 {
                     Trimestres TrimPaye = PersonneDAO.RecuperationDetailsPaiement(idEleve, libelleTrimestre);
                     lesTrimestresEleve.Add(TrimPaye);
-
                 }
-               
+                else
+                {
+                    lesTrimestresEleve.Add(unTrimestre);
+                }
 
             }
             
 
-            return (lesTrimestres);
+            return (lesTrimestresEleve);
+        }
+
+        //insertion des trimestres payé
+        public static void InsertionTrimestrePaye(int idEleve, string libelleTrimestre)
+        {
+            PersonneDAO.InsertionTrimestrePaye(idEleve, libelleTrimestre);
+        }
+
+        //Liste des eleves pas dispo
+        public List<Eleve> EleveExclu(string jour, string tranche)
+        {
+
+            Console.WriteLine("Test 3");
+            //10h00-12h00
+            string[] traiterTranche = tranche.ToString().Split('h');
+            string heureDebut = traiterTranche[0];
+
+            string[] traiterTrancheFin = traiterTranche[1].Split('-');
+            string heureFin = traiterTrancheFin[1];
+            
+               
+
+            List<Eleve> lesEleves = PersonneDAO.EleveExclu(jour, heureDebut, heureFin);
+
+
+            Console.WriteLine("count : " + lesEleves.Count);
+
+            return (lesEleves);
+
+        }
+
+        // ajouterCetEleve
+        public static void ajouterCetEleve(int idProf, int idEleve, int numseance)
+        {
+            PersonneDAO.AjouterCetEleve(idProf, idEleve, numseance);
         }
 
 
     }
+
+
 }
+
+

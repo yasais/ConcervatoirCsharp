@@ -40,7 +40,7 @@ namespace ConcervatoirC.Vue
             {
                 this.Hide();
                 Console.WriteLine("connection reussi");
-                Form1 afficherProf = new Form1();
+                ListeProf afficherProf = new ListeProf();
                 afficherProf.ShowDialog();
             }
             else

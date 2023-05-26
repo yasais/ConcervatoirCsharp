@@ -14,11 +14,11 @@ using ConcervatoirC.Vue;
 
 namespace ConcervatoirC
 {
-    public partial class Form1 : Form 
+    public partial class ListeProf : Form 
     { 
         Pers pers;
         List<Prof> lesPers = new List<Prof>();
-        public Form1()
+        public ListeProf()
         {
             InitializeComponent();
             pers = new Pers();
@@ -46,6 +46,27 @@ namespace ConcervatoirC
             
         }
 
+        public void reactualisation()
+        {
+            
+            lesPers = pers.chargementPers();
+
+            if (lesPers.Count() == 0) 
+            {
+                Seance.Hide();
+                button1.Hide();
+            
+            }
+            else
+            {
+                Seance.Show();
+                button1.Show();
+
+                affiche();
+            }
+
+            
+        }
         private void Form1_Load_1(object sender, EventArgs e)
         {
             lesPers = pers.chargementPers();
@@ -63,8 +84,12 @@ namespace ConcervatoirC
         private void button1_Click(object sender, EventArgs e)
         {
 
+            this.Hide();
+
             AjoutProf afficherAjoutProf = new AjoutProf();
             afficherAjoutProf.ShowDialog();
+
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -81,6 +106,6 @@ namespace ConcervatoirC
 
         }
 
-       
+        
     }
 }
