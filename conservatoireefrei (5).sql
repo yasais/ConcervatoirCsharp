@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mar. 18 avr. 2023 à 10:11
+-- Généré le : dim. 28 mai 2023 à 23:58
 -- Version du serveur : 10.4.28-MariaDB
--- Version de PHP : 8.2.4
+-- Version de PHP : 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -37,7 +37,8 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`login`, `mdp`) VALUES
-('admin', '123');
+('admin', '123'),
+('secretaireNumero1', '!Ks9p#mD4Z');
 
 -- --------------------------------------------------------
 
@@ -55,35 +56,18 @@ CREATE TABLE `eleve` (
 --
 
 INSERT INTO `eleve` (`IDELEVE`, `BOURSE`) VALUES
-(29, 100),
-(30, 100),
-(31, 100),
-(32, 100),
-(33, 100),
-(34, 100),
-(35, 100),
-(36, 100),
-(37, 100),
-(38, 100),
-(39, 100),
-(40, 100),
-(41, 100),
-(42, 100),
-(43, 100),
-(44, 100),
-(45, 100),
-(46, 100),
-(47, 100),
-(48, 100),
-(49, 100),
-(50, 100),
-(51, 100),
-(52, 100),
-(106, 5),
-(107, 100),
-(108, 100),
+(106, 400),
 (141, 400),
-(180, 300);
+(180, 300),
+(191, 500),
+(195, 540),
+(196, 200),
+(197, 300),
+(198, 100),
+(199, 150),
+(200, 120),
+(201, 500),
+(202, 300);
 
 -- --------------------------------------------------------
 
@@ -118,6 +102,22 @@ CREATE TABLE `inscription` (
   `DATEINSCRIPTION` char(32) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+--
+-- Déchargement des données de la table `inscription`
+--
+
+INSERT INTO `inscription` (`IDPROF`, `IDELEVE`, `NUMSEANCE`, `DATEINSCRIPTION`) VALUES
+(4, 106, 1, '2023-05-28 23:57:00'),
+(4, 106, 2, '2023-05-28 19:05:06'),
+(4, 191, 1, '2023-05-27 16:10:49'),
+(4, 197, 1, '2023-05-27 16:11:59'),
+(4, 198, 1, '2023-05-27 16:12:04'),
+(193, 106, 7, '2023-05-27 15:44:47'),
+(193, 106, 8, '2023-05-27 15:45:50'),
+(193, 141, 7, '2023-05-27 15:44:50'),
+(193, 141, 8, '2023-05-27 15:45:52'),
+(194, 106, 9, '2023-05-27 15:46:39');
+
 -- --------------------------------------------------------
 
 --
@@ -133,6 +133,8 @@ CREATE TABLE `instrument` (
 --
 
 INSERT INTO `instrument` (`LIBELLE`) VALUES
+('baterie'),
+('flûte'),
 ('guitare'),
 ('piano'),
 ('violon');
@@ -196,10 +198,24 @@ CREATE TABLE `payer` (
 --
 
 INSERT INTO `payer` (`IDELEVE`, `LIBELLE`, `DATEPAEMENT`, `PAYE`) VALUES
-(29, 'trimestre1', '25/02/2023', 1),
-(29, 'trimestre2', '05/04/2023', 1),
-(29, 'trimestre3', '03/08/2023', 1),
-(30, 'trimestre1', '12/01/2023', 1);
+(106, 'trimestre1', '02-02-2023 15:05:21', 1),
+(106, 'trimestre2', '2023-05-27 16:06:36', 1),
+(106, 'trimestre3', '2023-05-27 16:06:38', 1),
+(106, 'trimestre4', '2023-05-27 16:06:39', 1),
+(141, 'trimestre1', '02-02-2023 15:05:21', 1),
+(141, 'trimestre2', '2023-05-27 16:06:59', 1),
+(180, 'trimestre1', '02-02-2023 15:05:21', 1),
+(180, 'trimestre2', '2023-05-27 16:06:43', 1),
+(180, 'trimestre3', '2023-05-27 16:06:42', 1),
+(195, 'trimestre1', '02-02-2023 15:05:21', 1),
+(195, 'trimestre2', '2023-05-27 16:06:55', 1),
+(196, 'trimestre1', '02-02-2023 15:05:21', 1),
+(196, 'trimestre2', '2023-05-27 16:06:46', 1),
+(197, 'trimestre2', '2023-05-27 16:10:19', 1),
+(198, 'trimestre1', '02-02-2023 15:05:21', 1),
+(198, 'trimestre2', '2023-05-27 16:06:51', 1),
+(199, 'trimestre1', '02-02-2023 15:05:21', 1),
+(199, 'trimestre2', '2023-05-27 16:06:48', 1);
 
 -- --------------------------------------------------------
 
@@ -221,72 +237,32 @@ CREATE TABLE `personne` (
 --
 
 INSERT INTO `personne` (`ID`, `NOM`, `PRENOM`, `TEL`, `MAIL`, `ADRESSE`) VALUES
-(2, 'Baitiche', 'Sarah', 5638979, 'setif1311@gmail.com', '22 VOIE DES MOULINS SUD'),
-(3, 'AISSAOUI', 'yasmineeeeee', 1235956, 'YAYA@gmail.com', 'PARIS'),
-(4, 'BOUMAAZ', 'RAYAN', 2356894, 'RAYOU@gmail.com', 'Marseille'),
-(5, 'Aissaoui', 'rahma', 615544778, 'Yasmine', '14 avenue lucien francais, bat 3'),
-(6, 'Aissaoui', 'rahma', 1, 'Yasmine', '14 avenue lucien francais, bat 3'),
-(7, 'Aissaoui', 'rahma', 1, 'Yasmine', '14 avenue lucien francais, bat 3'),
-(8, 'Aissaoui', 'rahma', 1, 'Yasmine', '14 avenue lucien francais, bat 3'),
-(9, 'Aissaoui', 'rahma', 1, 'Yasmine', '14 avenue lucien francais, bat 3'),
-(10, 'Aissaoui', 'rahma', 1, 'Yasmine', '14 avenue lucien francais, bat 3'),
-(11, 'Aissaoui', 'rahma', 1, 'Yasmine', '14 avenue lucien francais, bat 3'),
-(12, 'Aissaoui', 'rahma', 1, 'yasmineaissoui@gmail.com', '14 avenue lucien francais, bat 3'),
-(13, 'Aissaoui', 'rahma', 1, 'yasmineaissoui@gmail.com', '14 avenue lucien francais, bat 3'),
-(14, 'Aissaoui', 'rahma', 1, 'yasmineaissoui@gmail.com', '14 avenue lucien francais, bat 3'),
-(15, 'Aissaoui', 'rahma', 1, 'yasmineaissoui@gmail.com', '14 avenue lucien francais, bat 3'),
-(16, 'Aissaoui', 'rahma', 1, 'yasmineaissoui@gmail.com', '14 avenue lucien francais, bat 3'),
-(17, 'selmani', 'khedoudja', 1, 'yasmineaissoui@gmail.com', '14 avenue Lucien français'),
-(18, 'selmani', 'khedoudja', 1, 'yasmineaissoui@gmail.com', '14 avenue Lucien français'),
-(19, 'Aissaoui', 'rahma', 1, 'selmanifaty7@gmail.com', '14 avenue lucien francais, bat 3'),
-(20, 'Aissaoui', 'rahma', 1, 'selmanifaty7@gmail.com', '14 avenue lucien francais, bat 3'),
-(21, 'Aissaoui', 'rahma', 1, 'selmanifaty7@gmail.com', '14 avenue lucien francais, bat 3'),
-(22, 'Aissaoui', 'rahma', 1, 'selmanifaty7@gmail.com', '14 avenue lucien francais, bat 3'),
-(23, 'Aissaoui', 'rahma', 1, 'selmanifaty7@gmail.com', '14 avenue lucien francais, bat 3'),
-(24, 'Aissaoui', 'rahma', 1, 'selmanifaty7@gmail.com', '14 avenue lucien francais, bat 3'),
-(25, 'Aissaoui', 'rahma', 1, 'selmanifaty7@gmail.com', '14 avenue lucien francais, bat 3'),
-(26, 'Aissaoui', 'rahma', 1, 'selmanifaty7@gmail.com', '14 avenue lucien francais, bat 3'),
-(29, 'Aissaoui', 'rahma', 1, 'selmanifaty7@gmail.com', '14 avenue lucien francais, bat 3'),
-(30, 'selmani', 'khedoudja', 1, 'Yasmine', '14 avenue Lucien français'),
-(31, 'selmani', 'khedoudja', 1, 'Yasmine', '14 avenue Lucien français'),
-(32, 'selmani', 'khedoudja', 1, 'Yasmine', '14 avenue Lucien français'),
-(33, 'selmani', 'khedoudja', 1, 'Yasmine', '14 avenue Lucien français'),
-(34, 'selmani', 'khedoudja', 1, 'Yasmine', '14 avenue Lucien français'),
-(35, 'selmani', 'khedoudja', 1, 'Yasmine', '14 avenue Lucien français'),
-(36, 'selmani', 'khedoudja', 1, 'Yasmine', '14 avenue Lucien français'),
-(37, 'selmani', 'khedoudja', 1, 'Yasmine', '14 avenue Lucien français'),
-(38, 'selmani', 'khedoudja', 1, 'Yasmine@aa', '14 avenue Lucien français'),
-(39, 'selmani', 'khedoudja', 1, 'Yasmine@aa', '14 avenue Lucien français'),
-(40, 'selmani', 'khedoudja', 1, 'Yasmine@aa', '14 avenue Lucien français'),
-(41, 'selmani', 'khedoudja', 1, 'Yasmine@aa', '14 avenue Lucien français'),
-(42, 'selmani', 'khedoudja', 1, 'Yasmine@aa', '14 avenue Lucien français'),
-(43, 'selmani', 'khedoudja', 1, 'Yasmine@aa', '14 avenue Lucien français'),
-(44, 'selmani', 'khedoudja', 1, 'Yasmine@aa', '14 avenue Lucien français'),
-(45, 'selmani', 'khedoudja', 1, 'Yasmine@aa', '14 avenue Lucien français'),
-(46, 'selmani', 'khedoudja', 1, 'Yasmine@aa', '14 avenue Lucien français'),
-(47, 'selmani', 'khedoudja', 1, 'Yasmine@aa', '14 avenue Lucien français'),
-(48, 'selmani', 'khedoudja', 1, 'Yasmine@aa', '14 avenue Lucien français'),
-(49, 'selmani', 'khedoudja', 1, 'Yasmine@aa', '14 avenue Lucien français'),
-(50, 'Aissaoui', 'rahma', 1, 'Yasmine', '14 avenue lucien francais, bat 3'),
-(51, 'Aissaoui', 'rahma', 1, 'Yasmine', '14 avenue lucien francais, bat 3'),
-(52, 'Aissaoui', 'rahma', 1, 'Yasmine', '14 avenue lucien francais, bat 3'),
+(2, 'Baitiche', 'Sarah', 785566332, 'setif1311@gmail.com', '22 VOIE DES MOULINS SUD'),
+(4, 'Boumaaz', 'Rayan', 625455889, 'RAYOU@gmail.com', '58 rue de Marseille'),
+(5, 'Aissaoui', 'Rahma', 615544778, 'Yasmine@gmail.com', '14 avenue lucien francais, bat 3'),
+(17, 'Selmani', 'Khedoudja', 754488552, 'yasmineaissoui@gmail.com', '14 avenue Lucien français'),
 (53, 'Treille', 'Lucas', 645858995, 'lucas@treille.com', '58 av general leclerd'),
-(101, 'amara', 'sacha', 612255447, 'sacha@amara.fr', '56 av du b'),
-(106, 'zaza', 'zeze', 1, '54788556', '54av'),
-(107, 'Aissaoui', 'rahma', 1, 'selmanifaty7@gmail.com', '14 avenue lucien francais, bat 3'),
-(108, 'Aissaoui', 'rahma', 1, 'Yasmine', '14 avenue lucien francais, bat 3'),
-(109, 'rere', 'rtrt', 555, 'mmm', '1'),
-(118, 'julien', 'dorée', 521144555, 'sfy7@gmail.com', '45 rue du morais'),
-(123, 'julien', 'dorée', 521144555, 'sfy7@gmail.com', '45 rue du morais'),
-(124, 'morais', 'vincent', 1445544455, 'vins@gmail.com', '77 av du luvien'),
-(125, 'morais', 'vincent', 1445544455, 'vins@gmail.com', '77 av du luvien'),
-(135, 'test', 'test', 0, 'test', 'test'),
+(101, 'Amara', 'Sacha', 612255447, 'sacha@amara.fr', '56 av du breton'),
+(106, 'Zaza', 'Britanie', 615544773, 'Britanienie@outlook.com', '54av du Moulin vert'),
+(118, 'Julien', 'Dorée', 521144555, 'sfy7@gmail.com', '45 rue du morais'),
+(124, 'Morais', 'Vincent', 658899554, 'vins@gmail.com', '77 av du luvien'),
 (140, 'Terpin', 'Celeste', 715458569, 'CslstTerpin@outlook.fr', '88 rue de Monod'),
-(141, 'habib', 'hinda', 712547885, 'hinda@outlook.com', '44 rue du pont'),
-(180, 'laufer', 'samuel', 715488996, 'samuellaufer@live.fr', '65 rue des chevaux'),
-(181, 'LEGOF', 'Hector', 625447712, 'legofhector@gmail.com', '15 av des rosiers'),
+(141, 'Habib', 'Hinda', 712547885, 'hinda@outlook.com', '44 rue du pont'),
+(180, 'Laufer', 'Samuel', 715488996, 'samuellaufer@live.fr', '65 rue des chevaux'),
 (183, 'Lin', 'Frank', 665588994, 'franklin@outlook.fr', '13 rue du moulin'),
-(184, 'Lin', 'Frank', 665588994, 'franklin@outlook.fr', '13 rue du moulin');
+(184, 'Hamidou', 'Salim', 715544773, 'Hamidou@live.com', '58 boulevard des Champs'),
+(191, 'Pascal', 'Michel', 785544996, 'michelpaspas@outlook.fr', '28 rue des aliens'),
+(192, 'Durant', 'Guillaume', 785566332, 'guiguidu@yahoo.fr', '49 rue des salomons'),
+(193, 'Anckyr', 'Theodort', 645874123, 'theoankyky@outlook.fr', '45 avenue des rosiers'),
+(194, 'Hamed', 'Laam', 745523985, 'laamHam@gmail.com', '52 boulevard des ruisseaux'),
+(195, 'Pendaro', 'Mathieu', 751122348, 'pendaroro@gmail.com', '18 av des luciens'),
+(196, 'Maneliose', 'Miléna', 654123589, 'milélé@life.com', '50 rue des livres perdus'),
+(197, 'Lavoisier', 'Pierette', 654128965, 'piepierette@outlook.fr', '16 boulevard des jours'),
+(198, 'Delange', 'Soleine', 754123695, 'sosodelange@gmail.com', '45 av des rues de paris'),
+(199, 'Povalosky', 'Jeremie', 654899665, 'jéjépol@outlook.com', '75 av des superwomen'),
+(200, 'Lafontnai', 'Flavie', 785458951, 'flavievie@gmail.com', '41 av des moulins rouges'),
+(201, 'Pedroni', 'Pablo', 785412365, 'pedropolo@outlook.com', '21 rue du bourbier'),
+(202, 'Juniera', 'Kilian', 758965412, 'kilianjuniera@gmail.com', '174 rue du grosier');
 
 -- --------------------------------------------------------
 
@@ -305,14 +281,13 @@ CREATE TABLE `prof` (
 --
 
 INSERT INTO `prof` (`IDPROF`, `INSTRUMENT`, `SALAIRE`) VALUES
-(3, 'piano', 1300.00),
 (4, 'violon', 1400.00),
-(123, 'piano', 1255.00),
-(125, 'violon', 1400.00),
 (140, 'guitare', 1600.00),
-(181, 'violon', 1400.00),
 (183, 'piano', 1245.00),
-(184, 'piano', 1245.00);
+(184, 'guitare', 5000.00),
+(192, 'flûte', 1782.00),
+(193, 'baterie', 1650.00),
+(194, 'baterie', 4000.00);
 
 -- --------------------------------------------------------
 
@@ -334,10 +309,16 @@ CREATE TABLE `seance` (
 --
 
 INSERT INTO `seance` (`IDPROF`, `NUMSEANCE`, `TRANCHE`, `JOUR`, `NIVEAU`, `CAPACITE`) VALUES
-(3, 1, '10h-12h', 'mercredi', 3, 25),
-(3, 2, '10h-12h', 'vendredi', 2, 25),
-(4, 3, '9h-13h', 'lundi', 2, 25),
-(4, 4, '14h-15h', 'jeudi', 3, 27);
+(4, 1, '14h-15h', 'lundi', 2, 25),
+(4, 2, '18h-19h', 'jeudi', 3, 27),
+(4, 3, '18h-19h', 'mercredi', 2, 25),
+(140, 4, '18h-19h', 'mercredi', 2, 25),
+(140, 10, '18h-19h', 'jeudi', 1, 10),
+(183, 5, '18h-19h', 'mercredi', 2, 25),
+(184, 6, '10h-12h', 'jeudi', 1, 25),
+(193, 7, '18h-19h', 'mardi', 2, 10),
+(193, 8, '14h-15h', 'vendredi', 2, 15),
+(194, 9, '10h-12h', 'jeudi', 1, 10);
 
 -- --------------------------------------------------------
 
@@ -451,7 +432,7 @@ ALTER TABLE `trim` ADD FULLTEXT KEY `LIBELLE` (`LIBELLE`);
 -- AUTO_INCREMENT pour la table `personne`
 --
 ALTER TABLE `personne`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=185;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=203;
 
 --
 -- Contraintes pour les tables déchargées
@@ -469,7 +450,7 @@ ALTER TABLE `eleve`
 ALTER TABLE `inscription`
   ADD CONSTRAINT `fk_insc_eleve` FOREIGN KEY (`IDELEVE`) REFERENCES `eleve` (`IDELEVE`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_inscr_prof` FOREIGN KEY (`IDPROF`) REFERENCES `prof` (`IDPROF`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_numSeance` FOREIGN KEY (`NUMSEANCE`) REFERENCES `seance` (`NUMSEANCE`);
+  ADD CONSTRAINT `fk_numSeance` FOREIGN KEY (`NUMSEANCE`) REFERENCES `seance` (`NUMSEANCE`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `payer`
@@ -492,7 +473,7 @@ ALTER TABLE `seance`
   ADD CONSTRAINT `fk_jour` FOREIGN KEY (`JOUR`) REFERENCES `jour` (`JOUR`),
   ADD CONSTRAINT `fk_prof` FOREIGN KEY (`IDPROF`) REFERENCES `prof` (`IDPROF`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_tranche` FOREIGN KEY (`TRANCHE`) REFERENCES `heure` (`TRANCHE`),
-  ADD CONSTRAINT `seance_ibfk_1` FOREIGN KEY (`NIVEAU`) REFERENCES `niveau` (`NIVEAU`);
+  ADD CONSTRAINT `seance_ibfk_1` FOREIGN KEY (`NIVEAU`) REFERENCES `niveau` (`NIVEAU`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
